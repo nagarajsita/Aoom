@@ -22,7 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <ClerkProvider
         appearance={{
-          layout: { socialButtonsVariant: "auto" },
+          layout: {
+            logoImageUrl: "/icons/aoom-logo.svg",
+            socialButtonsVariant: "auto",
+          },
           variables: {
             colorText: "#fff",
             colorPrimary: "#0E78F9",
