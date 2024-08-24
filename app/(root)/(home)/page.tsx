@@ -1,3 +1,4 @@
+"use client"
 import MeetingTypeList from "@/components/MeetingTypeList";
 import NextUpcomingCall from "@/components/NextUpcomingCall";
 import React from "react";
