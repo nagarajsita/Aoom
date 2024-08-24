@@ -1,6 +1,6 @@
 "use client";
 import { useCall, useCallStateHooks } from "@stream-io/video-react-sdk";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
@@ -13,12 +13,30 @@ const EndCallButton = () => {
     call?.state.createdBy &&
     localParticipant.userId === call.state.createdBy.id;
   const router = useRouter();
+
+  useEffect(() => {
+    const handleCallEnded = () => {
+      router.push("/");
+    };
+
+    call?.on("call.ended", handleCallEnded);
+
+    return () => {
+      call?.off("call.ended", handleCallEnded);
+    };
+  }, [call, router]);
+
   if (!isMeetingOwner) return null;
+
   return (
     <Button
       onClick={async () => {
+        await call.sendCustomEvent({
+          type: "call.ended",
+          data: { message: "The call has ended" },
+        });
         await call.endCall();
-        router.push("/");
+        router.push("/"); 
       }}
       className="bg-red-500"
     >
